@@ -1,6 +1,6 @@
 # movie
 
-A new Flutter project.
+movie app written by flutter (project II in HUST)
 
 ## Getting Started
 
