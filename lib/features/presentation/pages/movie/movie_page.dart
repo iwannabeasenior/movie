@@ -43,21 +43,6 @@ class _MoviePageState extends State<MoviePage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-//     return FutureBuilder(
-//       future: api.search(),
-//       builder:(context, snapshot) {
-//         if (snapshot.connectionState == ConnectionState.waiting) {
-//           return Center(child: CircularProgressIndicator());
-//         } else {
-//           if (snapshot.hasError) {
-//             return Center(child: Text('Error', style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),));
-//           } else {
-//             return
-//           }
-//         }
-//       }
-// ,
-//     );
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -274,7 +259,8 @@ class _MoviePageState extends State<MoviePage> {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.find_replace_sharp, color: Colors.black,),
+                                Icon(Icons.search, color: Colors.black,),
+                                SizedBox(width: 10,),
                                 Text('Search', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),)
                               ]
                           )
@@ -284,7 +270,7 @@ class _MoviePageState extends State<MoviePage> {
                 ),
               ),
             ),
-            SizedBox(height: height * 0.05,),
+            // SizedBox(height: height * 0.05,),
             Expanded(
                 child: GridView.builder(
                     padding: const EdgeInsets.only(top: 10, right: 10, left: 10),

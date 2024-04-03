@@ -25,6 +25,8 @@ class MovieDetail with EquatableMixin{
   String? type;
   String? network;
   List<String>? pathNetwork;
+
+
   MovieDetail({this.id, this.title, this.tagLine, this.postPath,
       this.backdropPath, this.overview, this.originalLanguage, this.genres,
       this.status, this.director, this.casts, this.videos, this.runTime,

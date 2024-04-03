@@ -47,8 +47,9 @@ class _PeoplePageState extends State<PeoplePage> {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(height: 30,),
             const Text('Popular People', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
             Container(
               width: width * .7,
               height: height * 0.05,

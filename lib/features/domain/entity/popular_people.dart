@@ -5,11 +5,13 @@ class PopularPeople with EquatableMixin{
   int? id;
   String? image;
   String? knownFilm;
-  PopularPeople({this.id, this.name, this.image, this.knownFilm});
+
+  String? job;
+  PopularPeople({this.id, this.name, this.image, this.knownFilm, this.job});
 
   @override
   // TODO: implement props
   List<Object?> get props => [
-    name, id, image, knownFilm,
+    name, id, image, knownFilm, job
   ];
 }

@@ -30,4 +30,7 @@ class GetTrendingHome {
   Future<List<PopularPeople>> getPopularPeople() async {
     return await repo.getPopularPeople();
   }
+  Future<Map<String, List<dynamic>>> getResultSearch({keyword}) async {
+    return await repo.getResultSearch(keyword: keyword);
+  }
 }

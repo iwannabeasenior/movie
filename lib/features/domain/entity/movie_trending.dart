@@ -1,11 +1,13 @@
 
 class MovieTrending {
-  final String? type;
-  final int? id;
-  final String? title;
-  final String? posterPath;
-  final String? backdropPath;
-  final double? voteAverage;
-  final String? releaseDate;
-  MovieTrending({this.type, this.id, this.title, this.releaseDate, this.posterPath, this.backdropPath, this.voteAverage});
+  String? type;
+  int? id;
+  String? title;
+  String? posterPath;
+  String? backdropPath;
+  double? voteAverage;
+  String? releaseDate;
+
+  String? overview;
+  MovieTrending({this.type, this.id, this.title, this.releaseDate, this.posterPath, this.backdropPath, this.voteAverage, this.overview});
 }

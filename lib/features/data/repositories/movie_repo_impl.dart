@@ -43,4 +43,9 @@ class MovieRepoImpl implements MovieRepo {
     return await api.getPopularPeople();
   }
 
+  @override
+  Future<Map<String, List>> getResultSearch({keyword}) async {
+    return await api.getResultSearch(keyword: keyword);
+  }
+
 }

@@ -10,6 +10,15 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SafeArea(
+        child: Scaffold(
+            body: Container(
+                child: Center(
+                    child: Text('Nguyen Trung Thanh',
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.black),)
+                )
+            )
+        )
+    );
   }
 }

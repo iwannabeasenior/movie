@@ -13,4 +13,5 @@ abstract class MovieRepo {
   Future<PeopleDetail> getPeopleDetail({id, type});
   Future<List<MovieTrending>> getFilmByFilter({type, subtype, sort, fromDate, toDate, items, isFilter});
   Future<List<PopularPeople>> getPopularPeople();
+  Future<Map<String, List<dynamic>>> getResultSearch({keyword});
 }

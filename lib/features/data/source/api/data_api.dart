@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:logger/logger.dart';
 import 'package:movie/features/data/models/movie_treding_model.dart';
@@ -22,6 +23,7 @@ abstract class MovieApi {
   Future<PeopleDetailModel> getPeopleDetail({id, type});
   Future<List<MovieTrendingModel>> getFilmFilter({type, subtype, sort, fromDate, toDate, items, isFilter});
   Future<List<PopularPeopleModel>> getPopularPeople();
+  Future<Map<String, List<dynamic>>> getResultSearch({keyword});
 }
 
 class MovieApiImpl implements MovieApi {
@@ -122,7 +124,8 @@ class MovieApiImpl implements MovieApi {
         final data = jsonDecode(response.body);
         movie.id = data['id'];
         movie.status = data['status'] ?? '-';
-        movie.title = data['title'] ?? '-';
+        movie.title = data['title'] ?? data['name'];
+        movie.title ??= '-';
         movie.vote = data['vote_average'] ?? 0;
         movie.postPath = data['poster_path'] ?? '-';
         movie.backdropPath = data['backdrop_path'] ?? '-';
@@ -302,6 +305,57 @@ class MovieApiImpl implements MovieApi {
       logger.d(e);
     }
     return list;
+  }
+
+  @override
+  Future<Map<String, List<dynamic>>> getResultSearch({keyword}) async {
+    Map<String, List<dynamic>> results = {};
+    results['movie'] = [];
+    results['tv'] = [];
+    results['person'] = [];
+    try {
+      final url = Uri.https('api.themoviedb.org', '/3/search/multi', {
+        'query' : keyword
+      });
+      final response = await http.get(url, headers: Constant.header);
+      final data = jsonDecode(response.body);
+      for (var item in data['results']) {
+        switch (item['media_type']) {
+
+          case 'movie':
+            results['movie']?.add(MovieTrendingModel(
+              id: item['id'],
+              type: 'movie',
+              posterPath: item['poster_path'] ?? '-',
+              releaseDate: formatDay(item['release_date']) ?? '-',
+              title: item['title'] ?? '-',
+              overview: item['overview'] ?? '-',
+            ));
+          case 'tv':
+            results['tv']?.add(MovieTrendingModel(
+              type: 'tv',
+              overview: item['overview'] ?? '-',
+              title: item['name'] ?? '-',
+              releaseDate: formatDay(item['first_air_date']) ?? '-',
+              id: item['id'] ?? 0,
+              posterPath: item['poster_path'] ?? '-',
+            ));
+          case 'person':
+            results['person']?.add(PopularPeopleModel(
+              id: item['id'] ?? 0,
+              job: item['known_for_department'] ?? '-',
+              image: item['profile_path'] ?? '-',
+              name: item['name'] ?? '-',
+              knownFilm: item['known_for'].where((item) => item['title'] != null).map((item) => item['title']).join(' ,') ?? '-',
+            ));
+          default:
+            logger.d('nothing found');
+        }
+      }
+    } catch(e) {
+      logger.d(e);
+    }
+    return results;
   }
 
 }

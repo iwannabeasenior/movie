@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:movie/features/domain/entity/movie_trailer.dart';
 import 'package:movie/features/domain/usecase/get_trending_home.dart';
 import 'package:movie/features/presentation/pages/home/home_state.dart';
+import 'package:movie/features/presentation/pages/home/search.dart';
 import 'package:movie/features/presentation/pages/home/widget/trailer.dart';
 import 'package:movie/features/presentation/pages/home/widget/trending.dart';
 import 'package:movie/helper/constant.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../../domain/entity/movie_trending.dart';
@@ -33,6 +35,7 @@ class _HomeState extends State<Home> {
   List<MovieTrending> listMovieTrending = [];
   List<MovieTrending> listMovieTrendingWeek = [];
   List<MovieTrailer> listMovieUpcomingTrailer = [];
+  TextEditingController _controller = TextEditingController();
   @override
   void initState() {
 
@@ -71,21 +74,52 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Search movie you want...', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 20),),
-                        Container(
-                          width: size.width * 0.2,
-                          decoration: BoxDecoration(
-                            color: Colors.lightBlueAccent,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: const Center(child: Text('Search', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),)),
-                        )
-                      ],
-                    ),
-                  ),
+                        Expanded(
+                          flex: 4,
+                          child: TextFormField(
+                            autofocus: false,
 
+                            onFieldSubmitted: (value) {
+                              if (value.trim() != '') {
+                                Navigator.push(context, PageTransition(child: SearchPageFather(keyword: value.trim()), type: PageTransitionType.bottomToTop));
+                                _controller.clear();
+                              }
+                            },
+                            controller: _controller,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 10, right: 10),
+                                hintText: 'Search movie you want...',
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(30)
+                                )
+                            ),
+                          ),
+                        ),
+                         Flexible(
+                           flex: 1,
+                           child: InkWell(
+                             onTap: () {
+                               if (_controller.text.trim() != '') {
+                                 Navigator.push(context, PageTransition(child: SearchPageFather(keyword: _controller.text.trim()), type: PageTransitionType.bottomToTop));
+                                 _controller.clear();FocusScope.of(context).unfocus();
+                               }
+
+                             },
+                             child: Container(
+                                width: size.width * 0.2,
+                                decoration: BoxDecoration(
+                                  color: Colors.lightBlueAccent,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: const Center(child: Text('Search', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),)),
+                             ),
+                           ),
+                         )
+                      ],
+                    )
+                  ),
                 ],
               ),
             ),

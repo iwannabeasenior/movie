@@ -1,7 +1,7 @@
 class MovieTrailer {
-  final String? title;
-  final String? titleTrailer;
-  final String? key;
-  final String? path;
-  MovieTrailer({required this.title, required this.key, required this.titleTrailer, required this.path});
+  String? title;
+  String? titleTrailer;
+  String? key;
+  String? path;
+  MovieTrailer({this.title, this.key, this.titleTrailer, this.path});
 }
