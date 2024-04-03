@@ -1,6 +1,6 @@
 # movie
 
-A new Flutter project.
+movie app written by flutter and crawl data from themoviedb by api (project II in HUST)
 
 ## Getting Started
 
